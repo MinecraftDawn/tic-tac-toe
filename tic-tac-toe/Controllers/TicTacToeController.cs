@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using tic_tac_toe.Hubs;
 using tic_tac_toe.Services;
 
 namespace tic_tac_toe.Controllers {
@@ -8,15 +10,19 @@ namespace tic_tac_toe.Controllers {
 
         private readonly ILogger<TicTacToeController> _logger;
         private readonly TicTacToeService _service;
+        private readonly IHubContext<TestHub> _hubContext;
 
-        public TicTacToeController(ILogger<TicTacToeController> logger, TicTacToeService service) {
+        public TicTacToeController(ILogger<TicTacToeController> logger, TicTacToeService service, IHubContext<TestHub> hubContext) {
             _logger = logger;
             _service = service;
+            _hubContext = hubContext;
         }
 
         [HttpPost("game")]
         public IActionResult Post(string player) {
             _service.joinGame(player);
+            _hubContext.Clients.All.SendAsync("ReceiveMessage", "test signalR");
+
             return Ok();
         }
 

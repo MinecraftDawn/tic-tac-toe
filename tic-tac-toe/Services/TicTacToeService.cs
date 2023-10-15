@@ -1,8 +1,12 @@
-﻿using tic_tac_toe.Respond;
+﻿using Microsoft.AspNetCore.SignalR;
+using tic_tac_toe.Hubs;
+using tic_tac_toe.Respond;
 
 namespace tic_tac_toe.Services {
     
     public class TicTacToeService {
+
+        private readonly IHubContext<TestHub> _hubContext;
 
         protected static int BOARD_SIZE = 9;
         protected List<string> players = new List<string>();
@@ -11,11 +15,13 @@ namespace tic_tac_toe.Services {
         protected string OPlayer = "";
         protected string turn = "X";
 
-        public TicTacToeService() {
+        public TicTacToeService(IHubContext<TestHub> hubContext) {
+            _hubContext = hubContext;
             resetGame();
         }
 
-        public void joinGame(string player) { 
+        public void joinGame(string player) {
+
             players.Add(player);
 
             if (XPlayer == "") {
@@ -46,7 +52,9 @@ namespace tic_tac_toe.Services {
             if (number >= BOARD_SIZE) return false;
             if (board[number] != " ") return false;
 
-            if(turn == "X" && player == XPlayer) {
+            _hubContext.Clients.All.SendAsync("ReceiveMessage", "test signalR");
+
+            if (turn == "X" && player == XPlayer) {
                 board[number] = "X";
                 turn = "O";
             } else if(turn == "O" && player == OPlayer) {
