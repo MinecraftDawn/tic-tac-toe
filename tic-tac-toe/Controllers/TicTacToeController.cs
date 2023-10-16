@@ -10,18 +10,15 @@ namespace tic_tac_toe.Controllers {
 
         private readonly ILogger<TicTacToeController> _logger;
         private readonly TicTacToeService _service;
-        private readonly IHubContext<TestHub> _hubContext;
 
-        public TicTacToeController(ILogger<TicTacToeController> logger, TicTacToeService service, IHubContext<TestHub> hubContext) {
+        public TicTacToeController(ILogger<TicTacToeController> logger, TicTacToeService service) {
             _logger = logger;
             _service = service;
-            _hubContext = hubContext;
         }
 
         [HttpPost("game")]
         public IActionResult Post(string player) {
             _service.joinGame(player);
-            _hubContext.Clients.All.SendAsync("ReceiveMessage", "test signalR");
 
             return Ok();
         }

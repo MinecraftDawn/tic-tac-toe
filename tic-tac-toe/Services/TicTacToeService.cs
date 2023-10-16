@@ -29,6 +29,8 @@ namespace tic_tac_toe.Services {
             } else if (OPlayer == "") {
                 OPlayer = player;
             }
+
+            _hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState("www"));
         }
 
         protected void initGameBoard() {
@@ -52,7 +54,7 @@ namespace tic_tac_toe.Services {
             if (number >= BOARD_SIZE) return false;
             if (board[number] != " ") return false;
 
-            _hubContext.Clients.All.SendAsync("ReceiveMessage", "test signalR");
+            
 
             if (turn == "X" && player == XPlayer) {
                 board[number] = "X";
@@ -61,6 +63,8 @@ namespace tic_tac_toe.Services {
                 board[number] = "O";
                 turn = "X";
             }
+
+            _hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState("www"));
 
             return true;
         }
