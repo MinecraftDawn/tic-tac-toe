@@ -14,6 +14,11 @@ namespace tic_tac_toe.Hubs {
             var state = _service.getGameState(user);
             Console.WriteLine(user + " : "+ message);
             await Clients.All.SendAsync("ReceiveMessage", state);
+
+        }
+
+        public async Task joinWebsocket(string user) {
+            await Groups.AddToGroupAsync(Context.ConnectionId, user);
         }
 
 

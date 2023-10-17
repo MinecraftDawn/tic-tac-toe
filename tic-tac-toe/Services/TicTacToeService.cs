@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 using tic_tac_toe.Hubs;
 using tic_tac_toe.Respond;
 
@@ -31,6 +32,7 @@ namespace tic_tac_toe.Services {
             }
 
             _hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState("www"));
+            _hubContext.Clients.Groups(player).SendAsync("sayHi","HiHi");
         }
 
         protected void initGameBoard() {
