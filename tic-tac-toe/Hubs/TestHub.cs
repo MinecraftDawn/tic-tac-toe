@@ -11,14 +11,20 @@ namespace tic_tac_toe.Hubs {
         }
 
         public async Task SendMessage(string user, string message) {
+            //foreach (string player in _service.players) {
+            //    var state = _service.getGameState(player);
+            //    await Clients.Group(player).SendAsync("ReceiveMessage", state);
+            //    Console.WriteLine(player + " " + state);
+            //}
             var state = _service.getGameState(user);
-            Console.WriteLine(user + " : "+ message);
+            Console.WriteLine(user + " : " + message);
             await Clients.All.SendAsync("ReceiveMessage", state);
 
         }
 
         public async Task joinWebsocket(string user) {
             await Groups.AddToGroupAsync(Context.ConnectionId, user);
+            _service.joinGame(user);
         }
 
 
