@@ -66,17 +66,21 @@ namespace tic_tac_toe.Services {
                 turn = "X";
             }
 
-            foreach (string p in players) {
-                var state = getGameState(p);
-                _hubContext.Clients.Group(p).SendAsync("ReceiveMessage", state);
-                Console.WriteLine(p + " , state:" + state);
-            }
+            sendStateToAllPlayer();
+
 
             //_hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState(player));
 
 
 
             return true;
+        }
+
+        public void sendStateToAllPlayer() {
+            foreach (string p in players) {
+                var state = getGameState(p);
+                _hubContext.Clients.Group(p).SendAsync("ReceiveMessage", state);
+            }
         }
 
         public void resetGame() {

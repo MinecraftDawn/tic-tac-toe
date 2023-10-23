@@ -31,13 +31,8 @@ namespace tic_tac_toe.Hubs {
         public async Task joinWebsocket(string user) {
             await Groups.AddToGroupAsync(Context.ConnectionId, user);
             _service.joinGame(user);
-
-            if(_service.players.Count > 1) {
-                foreach (string p in _service.players) {
-                    var s = _service.getGameState(p);
-                    await Clients.Group(p).SendAsync("ReceiveMessage", s);
-                    //Console.WriteLine(p + " , state:" + state);
-                }
+            if (_service.players.Count > 1) {
+                _service.sendStateToAllPlayer();
             }
         }
 
