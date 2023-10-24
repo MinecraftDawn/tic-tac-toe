@@ -12,12 +12,16 @@ public static class GameManager {
             gamePool.Add(game);
         }
     }
+    // todo remove
+    public static List<string> getPlayers() {
+        return gamePool[0].players;
+    }
 
-    static string join(string player) {
+    public static string join(string player) {
         return gamePool[0].joinGame(player);
     }
 
-    static StateResp getGameState(string player) {
+    public static StateResp getGameState(string player) {
         StateResp state = new StateResp();
         state.board = gamePool[0].getBoard();
         // todo
@@ -26,8 +30,12 @@ public static class GameManager {
         return state;
     }
 
-    static bool modifyCell(string player, int number) {
+    public static bool modifyCell(string player, int number) {
         return gamePool[0].modifyCell(player, number);
+    }
+
+    public static void resetGame() {
+        gamePool[0].resetGame();
     }
 
 

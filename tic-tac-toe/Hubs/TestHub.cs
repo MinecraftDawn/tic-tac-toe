@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Numerics;
+using tic_tac_toe.GameUtils;
 using tic_tac_toe.Services;
 
 namespace tic_tac_toe.Hubs {
@@ -20,7 +21,7 @@ namespace tic_tac_toe.Hubs {
             Console.WriteLine(user + " : " + message);
             //await Clients.All.SendAsync("ReceiveMessage", state);
 
-            foreach (string p in _service.players) {
+            foreach (string p in GameManager.getPlayers()) {
                 var s = _service.getGameState(p);
                 await Clients.Group(p).SendAsync("ReceiveMessage", state);
                 //Console.WriteLine(p + " , state:" + state);
@@ -31,7 +32,7 @@ namespace tic_tac_toe.Hubs {
         public async Task joinWebsocket(string user) {
             await Groups.AddToGroupAsync(Context.ConnectionId, user);
             _service.joinGame(user);
-            if (_service.players.Count > 1) {
+            if (GameManager.getPlayers().Count > 1) {
                 _service.sendStateToAllPlayer();
             }
         }
