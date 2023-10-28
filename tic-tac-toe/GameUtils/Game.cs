@@ -42,6 +42,7 @@ public class Game {
         StateResp state = new StateResp();
         state.board = board;
         state.sign = player == XPlayer ? "X" : "O";
+        state.winner = getWinner();
         return state;
     }
 
@@ -78,7 +79,7 @@ public class Game {
 
     }
 
-    public string isGameStop() {
+    public string getWinner() {
         ushort[,] lines = new ushort[,] { { 0, 1, 2 },
             { 3, 4, 5 },
             { 6, 7, 8 },
@@ -89,7 +90,7 @@ public class Game {
             { 2, 4, 6 },
         };
 
-        for (int i = 0; i < lines.Length; i++) {
+        for (int i = 0; i < 7; i++) {
             if (board[lines[i, 0]] == board[lines[i, 1]] &&
             board[lines[i, 1]] == board[lines[i, 2]] &&
             board[lines[i, 0]] != "") {

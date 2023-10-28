@@ -6,5 +6,7 @@
         public string sign { get; set; } = "X";
         public bool isChanged { get; set; } = false;
         public List<string> board { get; set; }
+
+        public string? winner { get; set; }
     }
 }
