@@ -3,6 +3,7 @@
 namespace tic_tac_toe.GameUtils; 
 public static class GameManager {
     private static List<Game> gamePool = new List<Game>();
+    private static List<bool> isGameFull = new List<bool>();
 
     // init game pool
     static GameManager() {
@@ -11,6 +12,7 @@ public static class GameManager {
             Game game = new Game();
             game.resetGame();
             gamePool.Add(game);
+            isGameFull.Add(false);
         }
     }
     // todo remove
@@ -19,6 +21,7 @@ public static class GameManager {
     }
 
     public static string join(string player) {
+        if (gamePool[0].getPlayerNumber() == 1) isGameFull[0] = true;
         return gamePool[0].joinGame(player);
     }
 

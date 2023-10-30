@@ -10,6 +10,12 @@ public class Game {
     protected string OPlayer = "";
     protected string turn = "X";
     public bool isUsing = false;
+    
+    public short getPlayerNumber() {
+        if (XPlayer == "") return 0;
+        else if (OPlayer == "") return 1;
+        else return 2;
+    }
 
     public string joinGame(string player) {
 
