@@ -21,7 +21,8 @@ namespace tic_tac_toe.Hubs {
             Console.WriteLine(user + " : " + message);
             //await Clients.All.SendAsync("ReceiveMessage", state);
 
-            foreach (string p in GameManager.getPlayers()) {
+            Game game = GameManager.getGameByPlayer(user);
+            foreach (string p in game.players) {
                 var s = _service.getGameState(p);
                 await Clients.Group(p).SendAsync("ReceiveMessage", state);
                 //Console.WriteLine(p + " , state:" + state);
@@ -32,8 +33,10 @@ namespace tic_tac_toe.Hubs {
         public async Task joinWebsocket(string user) {
             await Groups.AddToGroupAsync(Context.ConnectionId, user);
             _service.joinGame(user);
-            if (GameManager.getPlayers().Count > 1) {
-                _service.sendStateToAllPlayer();
+
+            Game game = GameManager.getGameByPlayer(user);
+            if (game.players.Count > 1) {
+                _service.sendStateToAllPlayer(user);
             }
         }
 

@@ -35,9 +35,9 @@ namespace tic_tac_toe.Controllers {
             return Ok();
         }
 
-        [HttpDelete("game")]
-        public IActionResult Delete() {
-            _service.resetGame();
+        [HttpDelete("game/{i}")]
+        public IActionResult Delete(int i) {
+            _service.resetGame(i);
             return Ok();
         }
 

@@ -29,21 +29,22 @@ namespace tic_tac_toe.Services {
         public bool modifyCell(string player, int number) {
             GameManager.modifyCell(player, number);
 
-            sendStateToAllPlayer();
+            sendStateToAllPlayer(player);
 
             //_hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState(player));
 
             return true;
         }
 
-        public void sendStateToAllPlayer() {
-            foreach (string p in GameManager.getPlayers()) {
+        public void sendStateToAllPlayer(string player) {
+            Game game = GameManager.getGameByPlayer(player);
+            foreach (string p in game.players) {
                 var state = getGameState(p);
                 _hubContext.Clients.Group(p).SendAsync("ReceiveMessage", state);
             }
         }
-        public void resetGame() {
-            GameManager.resetGame();
+        public void resetGame(int i) {
+            GameManager.resetGame(i);
         }
     }
 }
