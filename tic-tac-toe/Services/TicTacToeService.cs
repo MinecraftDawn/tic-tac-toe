@@ -38,11 +38,15 @@ namespace tic_tac_toe.Services {
 
         public void sendStateToAllPlayer(string player) {
             Game game = GameManager.getGameByPlayer(player);
+            bool flag = false;
             foreach (string p in game.players) {
                 var state = getGameState(p);
+                if (!state.winner.Equals(" ")) flag = true;
                 _hubContext.Clients.Group(p).SendAsync("ReceiveMessage", state);
             }
+            if(flag) { game.resetGame(); }
         }
+
         public void resetGame(int i) {
             GameManager.resetGame(i);
         }

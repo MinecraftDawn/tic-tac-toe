@@ -77,7 +77,7 @@ public class Game {
     //}
 
     public void resetGame() {
-        players = new List<string>();
+        players.Clear();
         initGameBoard();
         XPlayer = "";
         OPlayer = "";

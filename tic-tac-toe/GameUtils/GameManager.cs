@@ -33,6 +33,7 @@ public static class GameManager {
                 return gamePool[j].joinGame(player);
             }
         }
+        Console.WriteLine("Game full");
         return "";
     }
 
