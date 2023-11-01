@@ -40,6 +40,14 @@ namespace tic_tac_toe.Hubs {
             }
         }
 
+        public override Task OnDisconnectedAsync(Exception exception) {
+            Console.WriteLine(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
+        }
 
+        public override Task OnConnectedAsync() {
+            Console.WriteLine(Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
     }
 }
