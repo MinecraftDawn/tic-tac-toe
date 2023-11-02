@@ -99,12 +99,12 @@ public class Game {
         for (int i = 0; i < 7; i++) {
             if (board[lines[i, 0]] == board[lines[i, 1]] &&
             board[lines[i, 1]] == board[lines[i, 2]] &&
-            board[lines[i, 0]] != "") {
+            board[lines[i, 0]] != " ") {
                 return board[lines[i, 0]];
             }
         }
 
-        return "";
+        return " ";
     }
 
 }
