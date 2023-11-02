@@ -42,7 +42,7 @@ namespace tic_tac_toe.Services {
             foreach (string p in game.players) {
                 var state = getGameState(p);
                 if (!state.winner.Equals(" ")) flag = true;
-                _hubContext.Clients.Group(p).SendAsync("ReceiveMessage", state);
+                _hubContext.Clients.Client(p).SendAsync("ReceiveMessage", state);
             }
             if(flag) { game.resetGame(); }
         }

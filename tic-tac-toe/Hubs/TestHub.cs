@@ -24,14 +24,15 @@ namespace tic_tac_toe.Hubs {
             Game game = GameManager.getGameByPlayer(user);
             foreach (string p in game.players) {
                 var s = _service.getGameState(p);
-                await Clients.Group(p).SendAsync("ReceiveMessage", state);
+                await Clients.Client(p).SendAsync("ReceiveMessage", state);
+                //await Clients.Group(p).SendAsync("ReceiveMessage", state);
                 //Console.WriteLine(p + " , state:" + state);
             }
 
         }
 
         public async Task joinWebsocket(string user) {
-            await Groups.AddToGroupAsync(Context.ConnectionId, user);
+            //await Groups.AddToGroupAsync(Context.ConnectionId, user);
             _service.joinGame(user);
 
             Game game = GameManager.getGameByPlayer(user);
@@ -40,13 +41,17 @@ namespace tic_tac_toe.Hubs {
             }
         }
 
+        public async Task modifyCell(int number) {
+            _service.modifyCell(Context.ConnectionId, number);
+        }
+
         public override Task OnDisconnectedAsync(Exception exception) {
             Console.WriteLine(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
 
         public override Task OnConnectedAsync() {
-            Console.WriteLine(Context.ConnectionId);
+            _service.joinGame(Context.ConnectionId);
             return base.OnConnectedAsync();
         }
     }
