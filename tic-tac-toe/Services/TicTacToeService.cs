@@ -22,6 +22,10 @@ namespace tic_tac_toe.Services {
             //_hubContext.Clients.Groups(player).SendAsync("sayHi","HiHi");
         }
 
+        public bool leaveGame(string player) {
+            return GameManager.leave(player);
+        }
+
         public StateResp getGameState(string player) {
             return GameManager.getGameState(player);
         }

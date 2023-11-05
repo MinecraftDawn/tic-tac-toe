@@ -47,6 +47,7 @@ namespace tic_tac_toe.Hubs {
 
         public override Task OnDisconnectedAsync(Exception exception) {
             Console.WriteLine(Context.ConnectionId);
+            GameManager.leave(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
 

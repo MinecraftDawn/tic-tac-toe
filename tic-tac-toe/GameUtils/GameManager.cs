@@ -1,10 +1,12 @@
 ﻿using tic_tac_toe.Respond;
+using tic_tac_toe.utils;
 
 namespace tic_tac_toe.GameUtils; 
 public static class GameManager {
     private static List<Game> gamePool = new List<Game>();
     private static int index = 0;
-    private static Dictionary<string, Game> playerMap = new Dictionary<string, Game>();
+    private static ReverseDictionary<string, Game> playerMap = new ReverseDictionary<string, Game>();
+    //private static Dictionary<string, Game> playerMap = new Dictionary<string, Game>();
 
     // init game pool
     static GameManager() {
@@ -21,7 +23,7 @@ public static class GameManager {
     }
 
     public static Game getGameByPlayer(string player) {
-        return playerMap[player];
+        return playerMap.GetValue(player);
     }
 
     public static string join(string player) {
@@ -29,7 +31,7 @@ public static class GameManager {
         {
             int j = (i + index) % gamePool.Count;
             if (gamePool[j].players.Count < 2) {
-                playerMap[player] = gamePool[j];
+                playerMap.Set(player, gamePool[j]);
                 return gamePool[j].joinGame(player);
             }
         }
@@ -37,14 +39,28 @@ public static class GameManager {
         return "";
     }
 
+    public static bool leave(string player) {
+        if (playerMap.ContainsKey(player)) {
+
+            Game game = playerMap.GetValue(player);
+            if(playerMap.CountKeysForValue(game) == 1) {
+                game.resetGame();
+            }
+            playerMap.Remove(player);
+
+            return true;
+        }
+        return false;
+    }
+
     public static StateResp getGameState(string player) {
-        Game game = playerMap[player];
+        Game game = playerMap.GetValue(player);
         StateResp state = game.getGameState(player);
         return state;
     }
 
     public static bool modifyCell(string player, int number) {
-        Game game = playerMap[player];
+        Game game = playerMap.GetValue(player);
         return game.modifyCell(player, number);
     }
 
