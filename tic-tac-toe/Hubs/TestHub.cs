@@ -31,15 +31,15 @@ namespace tic_tac_toe.Hubs {
 
         }
 
-        public async Task joinWebsocket(string user) {
-            //await Groups.AddToGroupAsync(Context.ConnectionId, user);
-            _service.joinGame(user);
+        //public async Task joinWebsocket(string user) {
+        //    //await Groups.AddToGroupAsync(Context.ConnectionId, user);
+        //    _service.joinGame(user);
 
-            Game game = GameManager.getGameByPlayer(user);
-            if (game.players.Count > 1) {
-                _service.sendStateToAllPlayer(user);
-            }
-        }
+        //    Game game = GameManager.getGameByPlayer(user);
+        //    if (game.players.Count > 1) {
+        //        _service.sendStateToAllPlayer(user);
+        //    }
+        //}
 
         public async Task modifyCell(int number) {
             _service.modifyCell(Context.ConnectionId, number);
@@ -52,6 +52,7 @@ namespace tic_tac_toe.Hubs {
         }
 
         public override Task OnConnectedAsync() {
+            Console.WriteLine(Context.ConnectionId);
             _service.joinGame(Context.ConnectionId);
             return base.OnConnectedAsync();
         }
