@@ -16,7 +16,14 @@ namespace tic_tac_toe.Services {
         }
 
         public string joinGame(string player) {
-            return GameManager.join(player);
+            var sign =  GameManager.join(player);
+
+            Game game = GameManager.getGameByPlayer(player);
+            if (game.players.Count == 2) {
+                this.sendStateToAllPlayer(player);
+            }
+
+            return sign;
 
             //_hubContext.Clients.All.SendAsync("ReceiveMessage", this.getGameState("www"));
             //_hubContext.Clients.Groups(player).SendAsync("sayHi","HiHi");
