@@ -92,6 +92,7 @@ public class Game {
         XPlayer = "";
         OPlayer = "";
         turn = "X";
+        anyPlayerLeave = false;
 
     }
 
