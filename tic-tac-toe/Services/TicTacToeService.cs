@@ -19,9 +19,9 @@ namespace tic_tac_toe.Services {
             var sign =  GameManager.join(player);
 
             Game game = GameManager.getGameByPlayer(player);
-            if (game.players.Count == 2) {
+            //if (game.players.Count == 2) {
                 this.sendStateToAllPlayer(player);
-            }
+            //}
 
             return sign;
 
@@ -30,7 +30,9 @@ namespace tic_tac_toe.Services {
         }
 
         public bool leaveGame(string player) {
-            return GameManager.leave(player);
+            Game game = GameManager.getGameByPlayer(player);
+            bool result =  GameManager.leave(player);
+            return result;
         }
 
         public StateResp getGameState(string player) {

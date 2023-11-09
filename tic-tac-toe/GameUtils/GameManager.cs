@@ -46,6 +46,7 @@ public static class GameManager {
             if(playerMap.CountKeysForValue(game) == 1) {
                 game.resetGame();
             }
+            game.leaveGame(player);
             playerMap.Remove(player);
 
             return true;

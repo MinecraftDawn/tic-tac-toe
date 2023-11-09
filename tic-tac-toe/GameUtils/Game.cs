@@ -10,6 +10,7 @@ public class Game {
     protected string OPlayer = "";
     protected string turn = "X";
     public bool isUsing = false;
+    protected bool anyPlayerLeave = false;
     
     public short getPlayerNumber() {
         if (XPlayer == "") return 0;
@@ -31,6 +32,15 @@ public class Game {
 
         return "";
 
+    }
+
+    public bool leaveGame(string player) {
+        if (players.Contains(player)) {
+            players.Remove(player);
+            anyPlayerLeave = true;
+            return true;
+        }
+        return false;
     }
 
     public List<string> getBoard() {
@@ -86,6 +96,12 @@ public class Game {
     }
 
     public string getWinner() {
+        if(this.anyPlayerLeave) {
+            string player = players[0];
+            if (player == XPlayer) return "X";
+            return "O";
+        }
+
         ushort[,] lines = new ushort[,] { { 0, 1, 2 },
             { 3, 4, 5 },
             { 6, 7, 8 },
