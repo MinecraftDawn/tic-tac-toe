@@ -10,7 +10,7 @@ public static class GameManager {
 
     // init game pool
     static GameManager() {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             Game game = new Game();
             game.resetGame();
@@ -40,21 +40,20 @@ public static class GameManager {
     }
 
     public static bool leave(string player) {
-        if (playerMap.ContainsKey(player)) {
+        if (!isPlayerExist(player)) return false;
 
-            Game game = playerMap.GetValue(player);
-            if(playerMap.CountKeysForValue(game) == 1) {
-                game.resetGame();
-            }
-            game.leaveGame(player);
-            playerMap.Remove(player);
-
-            return true;
+        Game game = playerMap.GetValue(player);
+        if(playerMap.CountKeysForValue(game) == 1) {
+            game.resetGame();
         }
-        return false;
+        game.leaveGame(player);
+        playerMap.Remove(player);
+
+        return true;
     }
 
     public static StateResp getGameState(string player) {
+        if (!isPlayerExist(player)) return new StateResp();
         Game game = playerMap.GetValue(player);
         StateResp state = game.getGameState(player);
         return state;
@@ -67,6 +66,10 @@ public static class GameManager {
 
     public static void resetGame(int i) {
         gamePool[i].resetGame();
+    }
+
+    public static bool isPlayerExist(string player) {
+        return playerMap.ContainsKey(player);
     }
 
 
