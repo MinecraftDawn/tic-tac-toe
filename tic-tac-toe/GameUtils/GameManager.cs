@@ -4,20 +4,20 @@ using tic_tac_toe.utils;
 namespace tic_tac_toe.GameUtils; 
 public static class GameManager {
     private static List<Game> gamePool = new List<Game>();
+    private static int NUM_OF_GAME = 1;
     private static int index = 0;
     private static ReverseDictionary<string, Game> playerMap = new ReverseDictionary<string, Game>();
-    //private static Dictionary<string, Game> playerMap = new Dictionary<string, Game>();
 
     // init game pool
     static GameManager() {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < NUM_OF_GAME; i++)
         {
             Game game = new Game();
             game.resetGame();
             gamePool.Add(game);
         }
     }
-    // todo remove
+    
     public static List<string> getPlayers(int i) {
         return gamePool[i].players;
     }
